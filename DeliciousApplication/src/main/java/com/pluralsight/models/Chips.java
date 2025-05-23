@@ -22,6 +22,6 @@ public class Chips implements Food {
 
     @Override
     public String toString(){
-        return this.flavor+" "+String.format("%.2f",this.getPrice());
+        return this.flavor+" chips "+String.format("%.2f",this.getPrice());
     }
 }

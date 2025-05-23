@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import com.pluralsight.models.*;
+import static com.pluralsight.util.ReceiptWriter.writeReceipt;
 
 public class DeliciousApp {
     public static void main(String[] args) {
@@ -18,5 +19,6 @@ public class DeliciousApp {
         order.addFood(new Drink("Coca Cola",2));
         order.addFood(new Chips("Sour Cream"));
         System.out.println(order.getReciept());
+        writeReceipt(order.getReciept());
     }
 }
