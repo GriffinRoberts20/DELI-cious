@@ -85,14 +85,16 @@ public class Sandwich implements Food{
                 yield "";
             }
         };
-        sandwich.append(sizeString).append(" on ").append(this.bread).append(" bread ").append(String.format("%.2f",sizePrice));
+        sandwich.append(sizeString).append(" on ");
+        if(isToasted()) sandwich.append("toasted ");
+        sandwich.append(this.bread).append(" bread ").append(String.format("%.2f",sizePrice));
         List<Topping> t=getToppings();
         for(Topping topping:t){
-            sandwich.append("\n+");
+            sandwich.append("\n  +");
             if(topping.hasExtra()) sandwich.append("extra ");
             sandwich.append(topping.getName()).append(" ").append(String.format("%.2f",topping.getPrice(this.size)));
         }
-        sandwich.append("\nTotal ").append(String.format("%.2f",this.getPrice()));
+        sandwich.append("\n  Sandwich Total ").append(String.format("%.2f",this.getPrice()));
         return sandwich.toString();
     }
 }
