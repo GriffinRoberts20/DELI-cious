@@ -34,4 +34,15 @@ public class Drink implements Food{
             default -> 0;
         };
     }
+
+    @Override
+    public String toString(){
+        String sizeString=switch(size){
+            case 1 -> "Small";
+            case 2 -> "Medium";
+            case 3 -> "Large";
+            default -> "";
+        };
+        return sizeString+" "+this.flavor+" "+String.format("%.2f",this.getPrice());
+    }
 }
