@@ -22,10 +22,10 @@ public class Order {
         return foods.stream().mapToDouble(Food::getPrice).sum();
     }
 
-    public String getReciept(){
-        StringBuilder reciept=new StringBuilder();
-        foods.forEach(food -> reciept.append("-").append(food).append("\n"));
-        reciept.append("Total ").append(String.format("%.2f",this.getTotal()));
-        return reciept.toString();
+    public String getReceipt(){
+        StringBuilder receipt =new StringBuilder();
+        foods.forEach(food -> receipt.append("-").append(food).append("\n"));
+        receipt.append("Total ").append(String.format("%.2f",this.getTotal()));
+        return receipt.toString();
     }
 }

@@ -60,7 +60,9 @@ public class UserInterface {
                     order.addFood(drink);
                     break;
                 case "3":
-                    System.out.println("put add chips here");
+                    Chips chips=getChips();
+                    if(chips==null) break;
+                    order.addFood(chips);
                     break;
                 case "4":
                     System.out.println("put checkout here");
@@ -557,6 +559,67 @@ public class UserInterface {
         System.out.println("Returning to order menu.");
         Thread.sleep(2500);
         return drink;
+    }
+
+    public static Chips getChips() throws InterruptedException {
+        Chips chips=null;
+        String flavor;
+        boolean gettingFlavor=true;
+        while(gettingFlavor){
+            newScreen();
+            System.out.println("Chips $1.50");
+            divider(30);
+            System.out.println("   1) Classic");
+            System.out.println("   2) Sour Cream and Onion");
+            System.out.println("   3) BBQ");
+            System.out.println("   4) Jalapeño");
+            System.out.println("   5) Cheetos");
+            System.out.println("   6) Fritos");
+            System.out.println("   7) Doritos");
+            System.out.println("   0) Cancel");
+            switch (getChoice("Choose your flavor: ")){
+                case "1":
+                    flavor="Classic";
+                    break;
+                case "2":
+                    flavor="Sour Cream and Onion";
+                    break;
+                case "3":
+                    flavor="BBQ";
+                    break;
+                case "4":
+                    flavor="Jalapeño";
+                    break;
+                case "5":
+                    flavor="Cheetos";
+                    break;
+                case "6":
+                    flavor="Fritos";
+                    break;
+                case "7":
+                    flavor="Doritos";
+                    break;
+                case "0":
+                    gettingFlavor=false;
+                    continue;
+                default:
+                    System.out.println("Invalid flavor choice, must choose 1-7 to pick a flavor, or 0 to cancel drink order.");
+                    Thread.sleep(2500);
+                    continue;
+            }
+            chips=new Chips(flavor);
+            System.out.println(chips);
+            if(getChoice("Enter Y if chips are correct: ").equalsIgnoreCase("Y")){
+                System.out.println("Adding "+flavor+" chips to order.");
+                break;
+            }
+            if(getChoice("Enter Y to reorder chips: ").equalsIgnoreCase("Y")) continue;
+            System.out.println("Did not add chips to order.");
+            gettingFlavor=false;
+        }
+        System.out.println("Returning to order menu.");
+        Thread.sleep(2500);
+        return chips;
     }
 
     public static String getChoice(String q){
