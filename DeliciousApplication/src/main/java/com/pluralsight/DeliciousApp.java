@@ -1,10 +1,11 @@
 package com.pluralsight;
 
 import com.pluralsight.models.*;
-import static com.pluralsight.util.ReceiptWriter.writeReceipt;
+import static com.pluralsight.ui.UserInterface.*;
+import static com.pluralsight.util.ReceiptWriter.*;
 
 public class DeliciousApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Order order=new Order();
         Sandwich sandwich=new Sandwich(true,"White",8);
         sandwich.addTopping(new Meat("Steak",true));
@@ -20,5 +21,7 @@ public class DeliciousApp {
         order.addFood(new Chips("Sour Cream"));
         System.out.println(order.getReciept());
         writeReceipt(order.getReciept());
+
+        display();
     }
 }
