@@ -55,7 +55,9 @@ public class UserInterface {
                     order.addFood(sandwich);
                     break;
                 case "2":
-                    System.out.println("put add drink here");
+                    Drink drink=getDrink();
+                    if(drink==null) break;
+                    order.addFood(drink);
                     break;
                 case "3":
                     System.out.println("put add chips here");
@@ -216,7 +218,7 @@ public class UserInterface {
                             cancel=true;
                             continue;
                         default:
-                            System.out.println("Invalid meat choice, must choose 1-6, 99 to go to adding cheeses, or 0 to cancel order.");
+                            System.out.println("Invalid meat choice, must choose 1-6, 99 to go to adding cheeses, or 0 to cancel sandwich order.");
                             Thread.sleep(2500);
                             continue;
                     }
@@ -267,7 +269,7 @@ public class UserInterface {
                             cancel=true;
                             continue;
                         default:
-                            System.out.println("Invalid cheese choice, must choose 1-4 to add a cheese, 99 to go to adding freebies, or 0 to cancel order.");
+                            System.out.println("Invalid cheese choice, must choose 1-4 to add a cheese, 99 to go to adding freebies, or 0 to cancel sandwich order.");
                             Thread.sleep(2500);
                             continue;
                     }
@@ -333,7 +335,7 @@ public class UserInterface {
                             cancel=true;
                             continue;
                         default:
-                            System.out.println("Invalid meat choice, must choose 1-9 to add a freebie, 99 to go to adding sauces, or 0 to cancel order.");
+                            System.out.println("Invalid meat choice, must choose 1-9 to add a freebie, 99 to go to adding sauces, or 0 to cancel sandwich order.");
                             Thread.sleep(2500);
                             continue;
                     }
@@ -387,7 +389,7 @@ public class UserInterface {
                             cancel=true;
                             continue;
                         default:
-                            System.out.println("Invalid meat choice, must choose 1-6 to add a sauce, 99 to go to finish adding toppings, or 0 to cancel order.");
+                            System.out.println("Invalid meat choice, must choose 1-6 to add a sauce, 99 to go to finish adding toppings, or 0 to cancel sandwich order.");
                             Thread.sleep(2500);
                             continue;
                     }
@@ -420,7 +422,7 @@ public class UserInterface {
             else break;
         }
         System.out.println("Returning to order menu.");
-        Thread.sleep(3000);
+        Thread.sleep(2500);
         return sandwich;
     }
 
@@ -444,6 +446,117 @@ public class UserInterface {
             return getChoice(String.format("Enter Y for extra %s for $%.2f more: ",topping,cost)).equalsIgnoreCase("Y");
         }
         return getChoice("Enter Y for extra " + topping + ": ").equalsIgnoreCase("Y");
+    }
+
+    public static Drink getDrink() throws InterruptedException {
+        Drink drink=null;
+        boolean gettingDrink=true;
+        boolean cancel=false;
+        while(gettingDrink){
+            boolean gettingSize=true;
+            int size=0;
+            String flavor = "";
+            while(gettingSize){
+                newScreen();
+                System.out.println("Size");
+                divider(30);
+                System.out.println("   1) Small $2.00");
+                System.out.println("   2) Medium $2.50");
+                System.out.println("   3) Large $3.00");
+                System.out.println("   0) Cancel");
+                switch (getChoice("Choose your size: ")){
+                    case "1":
+                        size=1;
+                        break;
+                    case "2":
+                        size=2;
+                        break;
+                    case "3":
+                        size=3;
+                        break;
+                    case "0":
+                        cancel=true;
+                        gettingSize=false;
+                        continue;
+                    default:
+                        System.out.println("Invalid size choice, must choose 1-3 to pick a size, or 0 to cancel drink order.");
+                        Thread.sleep(2500);
+                        continue;
+                }
+                gettingSize=false;
+            }
+            if(cancel) break;
+            boolean gettingFlavor=true;
+            while(gettingFlavor){
+                newScreen();
+                System.out.println("Flavor");
+                divider(30);
+                System.out.println("   1) Coca Cola");
+                System.out.println("   2) Diet Coca Cola");
+                System.out.println("   3) Coca Cola Zero");
+                System.out.println("   4) Fanta");
+                System.out.println("   5) Sprite");
+                System.out.println("   6) Barq's Root Beer");
+                System.out.println("   7) Mountain Dew");
+                System.out.println("   8) Dr. Pepper");
+                System.out.println("   0) Cancel");
+                switch (getChoice("Choose your flavor: ")){
+                    case "1":
+                        flavor="Coca Cola";
+                        break;
+                    case "2":
+                        flavor="Diet Coca Cola";
+                        break;
+                    case "3":
+                        flavor="Coca Cola Zero";
+                        break;
+                    case "4":
+                        flavor="Fanta";
+                        break;
+                    case "5":
+                        flavor="Sprite";
+                        break;
+                    case "6":
+                        flavor="Barq's Root Beer";
+                        break;
+                    case "7":
+                        flavor="Mountain Dew";
+                        break;
+                    case "8":
+                        flavor="Dr. Pepper";
+                        break;
+                    case "0":
+                        cancel=true;
+                        gettingFlavor=false;
+                        continue;
+                    default:
+                        System.out.println("Invalid flavor choice, must choose 1-8 to pick a flavor, or 0 to cancel drink order.");
+                        Thread.sleep(2500);
+                        continue;
+                }
+                gettingFlavor=false;
+            }
+            if(!cancel){
+                drink=new Drink(flavor,size);
+                System.out.println(drink);
+                if(getChoice("Enter Y if drink is correct: ").equalsIgnoreCase("Y")) {
+                    switch (size){
+                        case 1->System.out.println("Added Small "+flavor+" to order.");
+                        case 2->System.out.println("Added Medium "+flavor+" to order.");
+                        case 3->System.out.println("Added Large "+flavor+" to order.");
+                    }
+                    break;
+                }
+                if(getChoice("Enter Y to remake drink: ").equalsIgnoreCase("Y")) continue;
+                System.out.println("Did not add drink to order.");
+                drink=null;
+                gettingDrink=false;
+            }
+            else break;
+        }
+        System.out.println("Returning to order menu.");
+        Thread.sleep(2500);
+        return drink;
     }
 
     public static String getChoice(String q){
