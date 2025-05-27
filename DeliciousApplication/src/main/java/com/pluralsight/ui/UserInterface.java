@@ -1,8 +1,8 @@
 package com.pluralsight.ui;
 
 import com.pluralsight.models.*;
-
 import java.util.Scanner;
+import static com.pluralsight.util.ReceiptWriter.writeReceipt;
 
 public class UserInterface {
 
@@ -65,7 +65,14 @@ public class UserInterface {
                     order.addFood(chips);
                     break;
                 case "4":
-                    System.out.println("put checkout here");
+                    boolean checkedOut=false;
+                    if(!order.isEmpty()) checkedOut=checkout(order);
+                    else System.out.println("Order is empty.");
+                    if(!checkedOut){
+                        if(getChoice("Enter Y to continue ordering: ").equalsIgnoreCase("Y")) break;
+                    }
+                    gettingChoice=false;
+                    order=new Order();
                     break;
                 case "0":
                     System.out.println("Canceling order.");
@@ -620,6 +627,20 @@ public class UserInterface {
         System.out.println("Returning to order menu.");
         Thread.sleep(2500);
         return chips;
+    }
+
+    public static boolean checkout(Order order){
+        newScreen();
+        System.out.println(order.getReceipt());
+        divider(30);
+        if(getChoice("Enter Y if the order is correct: ").equalsIgnoreCase("Y")){
+            writeReceipt(order.getReceipt());
+            return true;
+        }
+        else {
+            System.out.println("Did not process order.");
+            return false;
+        }
     }
 
     public static String getChoice(String q){

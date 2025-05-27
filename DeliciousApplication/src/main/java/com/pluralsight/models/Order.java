@@ -28,4 +28,8 @@ public class Order {
         receipt.append("Total ").append(String.format("%.2f",this.getTotal()));
         return receipt.toString();
     }
+
+    public boolean isEmpty(){
+        return foods.isEmpty();
+    }
 }
