@@ -1,0 +1,13 @@
+-Medium 8" on toasted White bread 7.00
+  +extra Steak 3.00
+  +Bacon 2.00
+  +extra American 2.10
+  +Cheddar 1.50
+  +Lettuce 0.00
+  +Onions 0.00
+  +Pickles 0.00
+  +Mayo 0.00
+  Sandwich Total 15.60
+-Medium Coca Cola 2.50
+-Sour Cream chips 1.50
+Total 19.60
