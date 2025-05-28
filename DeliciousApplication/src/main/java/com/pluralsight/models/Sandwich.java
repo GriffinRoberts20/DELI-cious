@@ -44,6 +44,10 @@ public class Sandwich implements Food{
         this.toppings.add(topping);
     }
 
+    public void removeTopping(Topping topping){
+        this.toppings.remove(topping);
+    }
+
     public List<Topping> getToppings(){
         return this.toppings.stream().toList();
     }

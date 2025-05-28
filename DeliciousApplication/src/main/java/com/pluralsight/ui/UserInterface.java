@@ -1,7 +1,15 @@
 package com.pluralsight.ui;
 
 import com.pluralsight.models.*;
+import com.pluralsight.models.signature.BLT;
+import com.pluralsight.models.signature.ChickenBaconCheddar;
+import com.pluralsight.models.signature.Italian;
+import com.pluralsight.models.signature.PhillyCheeseSteak;
+
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static com.pluralsight.util.ReceiptWriter.writeReceipt;
 
 public class UserInterface {
@@ -45,6 +53,7 @@ public class UserInterface {
             System.out.println("Order Menu");
             divider(30);
             System.out.println("   1) Add Sandwich");
+            System.out.println("   11) Add Signature Sandwich");
             System.out.println("   2) Add Drink");
             System.out.println("   3) Add Chips");
             System.out.println("   4) Checkout");
@@ -54,6 +63,11 @@ public class UserInterface {
                     Sandwich sandwich=getSandwich();
                     if(sandwich==null) break;
                     order.addFood(sandwich);
+                    break;
+                case "11":
+                    Sandwich signature=getSignatureSandwich();
+                    if(signature==null) break;
+                    order.addFood(signature);
                     break;
                 case "2": //gets drink order, checks if user cancelled drink order, if not adds drink to order
                     Drink drink=getDrink();
@@ -126,6 +140,7 @@ public class UserInterface {
             //confirm choices, if wrong ask if user wants to remake
             if(!cancel) {
                 if(!confirmFood(sandwich)) {
+                    sandwich=null;
                     if (getChoice("Enter Y to remake sandwich: ").equalsIgnoreCase("Y")) {
                         continue;
                     }
@@ -135,6 +150,115 @@ public class UserInterface {
         }
         System.out.println("Returning to order menu.");
         Thread.sleep(2500);
+        return sandwich;
+    }
+
+    //gets signature sandwich order
+    public static Sandwich getSignatureSandwich() throws InterruptedException{
+        Sandwich sandwich;
+        boolean cancel=false;
+        while(true){
+            sandwich=getBase();
+            //cancel order
+            if(sandwich==null) break;
+            //remove toppings
+            if(getChoice("Enter Y to remove toppings: ").equalsIgnoreCase("Y")){
+                sandwich=editSignature(sandwich);
+            }
+            //cancel order
+            if(sandwich==null) break;
+            //add toppings
+            if(getChoice("Enter Y to add toppings: ").equalsIgnoreCase("Y")){
+                sandwich=addToppings(sandwich);
+            }
+            //cancel order
+            if(sandwich==null) cancel=true;
+            //confirm choices, if wrong ask if user wants to remake
+            if(!cancel) {
+                if(!confirmFood(sandwich)) {
+                    sandwich=null;
+                    if (getChoice("Enter Y to remake sandwich: ").equalsIgnoreCase("Y")) {
+                        continue;
+                    }
+                }
+            }
+            break;
+        }
+        System.out.println("Returning to order menu.");
+        Thread.sleep(2500);
+        return sandwich;
+    }
+
+    //gets base signature sandwich
+    public static Sandwich getBase() throws InterruptedException {
+        Sandwich sandwich;
+        while(true) {
+            newScreen();
+            System.out.println("Sizes");
+            divider(30);
+            System.out.println("   1) Italian");
+            System.out.println("   2) Philly Cheese Steak");
+            System.out.println("   3) Chicken Bacon Cheddar");
+            System.out.println("   4) BLT");
+            System.out.println("   0) Cancel");
+            String signatureChoice=getChoice("Choose your sandwich: ");
+            if(signatureChoice.equalsIgnoreCase("0")){
+                sandwich=null;
+                break;
+            }
+            List<String> options= List.of(new String[]{"1", "2", "3", "4"});
+            if(!options.contains(signatureChoice)){
+                System.out.println("Invalid Signature Sandwich Choice, must choose 1-4, or 0 to cancel.");
+                Thread.sleep(2500);
+                continue;
+            }
+            else {
+                boolean stacked=getChoice("Enter Y to make your sandwich Stacked: ").equalsIgnoreCase("Y");
+                sandwich = switch (signatureChoice) {
+                    case "1" -> new Italian(stacked);
+                    case "2" -> new PhillyCheeseSteak(stacked);
+                    case "3" -> new ChickenBaconCheddar(stacked);
+                    case "4" -> new BLT(stacked);
+                    default -> null;
+                };
+            }
+            break;
+        }
+        return sandwich;
+    }
+
+    public static Sandwich editSignature(Sandwich sandwich){
+        while(true){
+            newScreen();
+            System.out.println("Toppings");
+            AtomicInteger i=new AtomicInteger(1);
+            Sandwich finalSandwich = sandwich;
+            sandwich.getToppings().forEach(topping -> {
+                System.out.print("   "+i.getAndIncrement()+") ");
+                if(topping.hasExtra()) System.out.print("extra "+topping.getName());
+                else System.out.print(topping.getName());
+                System.out.printf(" %.2f%n",topping.getPrice(finalSandwich.getSize()));
+            });
+            System.out.println("   99) Done removing toppings");
+            System.out.println("   0) Cancel");
+            String indexString=getChoice("Choose Topping to remove: ");
+            //cancel order
+            if(indexString.equals("0")) sandwich=null;
+            //exit loop
+            if(indexString.equals("99")||indexString.equals("0")) break;
+            int indexToRemove;
+            try{
+                indexToRemove=Integer.parseInt(indexString)-1;
+                if(indexToRemove>=sandwich.getToppings().size()||indexToRemove<0){
+                    System.out.println("Invalid choice, must choose 1-"+sandwich.getToppings().size()+", 99 to finish removing toppings, or 0 to cancel order.");
+                    continue;
+                }
+            } catch (Exception e){
+                System.out.println("Invalid choice, must choose 1-"+sandwich.getToppings().size()+", 99 to finish removing toppings, or 0 to cancel order.");
+                continue;
+            }
+            sandwich.removeTopping(sandwich.getToppings().get(indexToRemove));
+        }
         return sandwich;
     }
 
