@@ -99,7 +99,8 @@ Confirm order, save receipt if confirmed, ask whether to continue or cancel if n
 ## Interesting Code
 The most interesting code I wrote was the method editSignature(), which is where removing toppings from sandwiches is handled. Here, I created a dynamic list to display the current toppings on the sandwich and allow the user to remove toppings one at a time.
 
-`public static Sandwich editSignature(Sandwich sandwich){
+```Java
+public static Sandwich editSignature(Sandwich sandwich){
         while(true){
             newScreen();
             System.out.println("           Toppings");
@@ -133,7 +134,8 @@ The most interesting code I wrote was the method editSignature(), which is where
             sandwich.removeTopping(sandwich.getToppings().get(indexToRemove));
         }
         return sandwich;
-    }`
+    }
+```
 
 
 
