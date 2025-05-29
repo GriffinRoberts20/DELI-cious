@@ -25,7 +25,7 @@ public class UserInterface {
         boolean gettingChoice = true;
         while(gettingChoice){
             newScreen();
-            System.out.println("Home Screen");
+            System.out.println("          DELI-CIOUS");
             divider(30);
             System.out.println("   1) New Order");
             System.out.println("   0) Exit");
@@ -50,7 +50,7 @@ public class UserInterface {
         boolean gettingChoice=true;
         while(gettingChoice){
             newScreen();
-            System.out.println("Order Menu");
+            System.out.println("          Order Menu");
             divider(30);
             System.out.println("   1) Add Sandwich");
             System.out.println("   11) Add Signature Sandwich");
@@ -194,7 +194,7 @@ public class UserInterface {
         Sandwich sandwich;
         while(true) {
             newScreen();
-            System.out.println("Sizes");
+            System.out.println("          Signatures");
             divider(30);
             System.out.println("   1) Italian");
             System.out.println("   2) Philly Cheese Steak");
@@ -230,7 +230,8 @@ public class UserInterface {
     public static Sandwich editSignature(Sandwich sandwich){
         while(true){
             newScreen();
-            System.out.println("Toppings");
+            System.out.println("           Toppings");
+            divider(30);
             AtomicInteger i=new AtomicInteger(1);
             Sandwich finalSandwich = sandwich;
             sandwich.getToppings().forEach(topping -> {
@@ -267,7 +268,7 @@ public class UserInterface {
         int size;
         while(true) {
             newScreen();
-            System.out.println("Sizes");
+            System.out.println("             Size");
             divider(30);
             System.out.println("   4) Small $5.50");
             System.out.println("   8) Medium $7.00");
@@ -295,7 +296,7 @@ public class UserInterface {
         String bread;
         while (true) {
             newScreen();
-            System.out.println("Breads");
+            System.out.println("            Bread");
             divider(30);
             System.out.println("   1) White");
             System.out.println("   2) Wheat");
@@ -372,7 +373,7 @@ public class UserInterface {
         while(gettingMeats) {
             newScreen();
             String meatType;
-            System.out.print("Meats ");
+            System.out.print("          Meats ");
             switch (sandwich.getSize()){
                 case 4->System.out.println("+$1");
                 case 8->System.out.println("+$2");
@@ -432,7 +433,7 @@ public class UserInterface {
         while(gettingCheeses){
             newScreen();
             String cheeseType;
-            System.out.print("Cheeses ");
+            System.out.print("        Cheeses ");
             switch (sandwich.getSize()){
                 case 4->System.out.println("+$0.75");
                 case 8->System.out.println("+$1.50");
@@ -484,7 +485,7 @@ public class UserInterface {
         while(gettingRegular){
             newScreen();
             String regularType;
-            System.out.println("Freebies");
+            System.out.println("           Freebies");
             divider(30);
             System.out.println("   1) Lettuce");
             System.out.println("   2) Peppers");
@@ -551,7 +552,7 @@ public class UserInterface {
         while(gettingSauces){
             newScreen();
             String sauceType;
-            System.out.println("Sauces");
+            System.out.println("            Sauces");
             divider(30);
             System.out.println("   1) Mayo");
             System.out.println("   2) Mustard");
@@ -604,6 +605,7 @@ public class UserInterface {
     public static boolean confirmFood(Food food){
         newScreen();
         System.out.println(food);
+        divider(30);
         if(food instanceof Sandwich){
             if (getChoice("Enter Y if sandwich is correct: ").equalsIgnoreCase("Y")) {
                 System.out.println("Adding sandwich to order.");
@@ -686,7 +688,7 @@ public class UserInterface {
         boolean gettingSize=true;
         while(gettingSize){
             newScreen();
-            System.out.println("Size");
+            System.out.println("             Size");
             divider(30);
             System.out.println("   1) Small $2.00");
             System.out.println("   2) Medium $2.50");
@@ -721,7 +723,7 @@ public class UserInterface {
         boolean gettingFlavor=true;
         while(gettingFlavor){
             newScreen();
-            System.out.println("Flavor");
+            System.out.println("            Flavor");
             divider(30);
             System.out.println("   1) Coca Cola");
             System.out.println("   2) Diet Coca Cola");
@@ -796,7 +798,7 @@ public class UserInterface {
         String flavor;
         while(true) {
             newScreen();
-            System.out.println("Chips $1.50");
+            System.out.println("         Chips $1.50");
             divider(30);
             System.out.println("   1) Classic");
             System.out.println("   2) Sour Cream and Onion");
