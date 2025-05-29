@@ -99,8 +99,41 @@ Confirm order, save receipt if confirmed, ask whether to continue or cancel if n
 ## Interesting Code
 The most interesting code I wrote was the method editSignature(), which is where removing toppings from sandwiches is handled. Here, I created a dynamic list to display the current toppings on the sandwich and allow the user to remove toppings one at a time.
 
-![image](https://github.com/user-attachments/assets/667a7f23-49de-4d78-bcb3-53fd3dec67bb)
-
+`public static Sandwich editSignature(Sandwich sandwich){
+        while(true){
+            newScreen();
+            System.out.println("           Toppings");
+            divider(30);
+            AtomicInteger i=new AtomicInteger(1);
+            Sandwich finalSandwich = sandwich;
+            sandwich.getToppings().forEach(topping -> {
+                System.out.print("   "+i.getAndIncrement()+") ");
+                if(topping.hasExtra()) System.out.print("extra "+topping.getName());
+                else System.out.print(topping.getName());
+                System.out.printf(" %.2f%n",topping.getPrice(finalSandwich.getSize()));
+            });
+            System.out.println("   99) Done removing toppings");
+            System.out.println("   0) Cancel");
+            String indexString=getChoice("Choose Topping to remove: ");
+            //cancel order
+            if(indexString.equals("0")) sandwich=null;
+            //exit loop
+            if(indexString.equals("99")||indexString.equals("0")) break;
+            int indexToRemove;
+            try{
+                indexToRemove=Integer.parseInt(indexString)-1;
+                if(indexToRemove>=sandwich.getToppings().size()||indexToRemove<0){
+                    System.out.println("Invalid choice, must choose 1-"+sandwich.getToppings().size()+", 99 to finish removing toppings, or 0 to cancel order.");
+                    continue;
+                }
+            } catch (Exception e){
+                System.out.println("Invalid choice, must choose 1-"+sandwich.getToppings().size()+", 99 to finish removing toppings, or 0 to cancel order.");
+                continue;
+            }
+            sandwich.removeTopping(sandwich.getToppings().get(indexToRemove));
+        }
+        return sandwich;
+    }`
 
 
 
